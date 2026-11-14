@@ -11,6 +11,10 @@ name: python-service-ci
         description: "Python version"
         type: string
         default: "3.12"
+      fail-on-vulnerabilities:
+        description: Fail the build when Trivy finds HIGH/CRITICAL issues
+        type: boolean
+        default: true
 
 jobs:
   secret-scan:
@@ -84,13 +88,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Trivy Vulnerability Scan
+      - name: Trivy vulnerability scan
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: scan-target:local
           severity: CRITICAL,HIGH
           ignore-unfixed: true
-          exit-code: 1
+          exit-code: ${{ inputs.fail-on-vulnerabilities && '1' || '0' }}
 
       - name: Login to Github Container Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
