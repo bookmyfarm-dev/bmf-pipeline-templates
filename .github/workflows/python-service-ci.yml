@@ -9,7 +9,6 @@ name: python-service-ci
         type: string
       python-version:
         description: "Python version"
-        required: true
         type: string
         default: "3.12"
 
