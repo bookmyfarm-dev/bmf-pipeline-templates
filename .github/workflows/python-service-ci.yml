@@ -88,7 +88,7 @@ jobs:
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: scan-target:local
-          severity: CRITICAL,High
+          severity: CRITICAL,HIGH
           ignore-unfixed: true
           exit-code: 1
 
